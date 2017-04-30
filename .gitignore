@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/dotnext2017spb/Contract/obj/Debug
+/dotnext2017spb/dotnext2017spb/bin/Debug
+/dotnext2017spb/dotnext2017spb/obj/Debug
