@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnext2017spb", "dotnext2017spb\dotnext2017spb.csproj", "{E68967BD-7AD0-43E8-B40D-4CFCE7A1F4EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnext2017spb_net461", "dotnext2017spb_net461\dotnext2017spb_net461.csproj", "{45FFFC1E-2A2F-4427-8DCA-B522367471EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contract", "Contract\Contract.csproj", "{77C40DE1-EF21-4791-9B61-7FF6EEA68FCF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnext2017spb_net461_benchmarks", "dotnext2017spb_net461_benchmarks\dotnext2017spb_net461_benchmarks.csproj", "{6158F81D-AE6F-4BBD-A9A2-5BA9F8991C2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnext2017spb_net461_client", "dotnext2017spb_net461_client\dotnext2017spb_net461_client.csproj", "{61A9EA81-9457-4DC4-9DBF-34F4309F8E17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnext2017spb_coreclient", "dotnext2017spb_coreclient\dotnext2017spb_coreclient.csproj", "{BE6E310A-9CE2-4F3A-86FC-C18EECCB5BAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnext2017spb_coreclient_benchmarks", "dotnext2017spb_coreclient_benchmarks\dotnext2017spb_coreclient_benchmarks.csproj", "{3E497638-13D8-4863-BEF5-E853E424FE6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E68967BD-7AD0-43E8-B40D-4CFCE7A1F4EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E68967BD-7AD0-43E8-B40D-4CFCE7A1F4EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E68967BD-7AD0-43E8-B40D-4CFCE7A1F4EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E68967BD-7AD0-43E8-B40D-4CFCE7A1F4EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77C40DE1-EF21-4791-9B61-7FF6EEA68FCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77C40DE1-EF21-4791-9B61-7FF6EEA68FCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77C40DE1-EF21-4791-9B61-7FF6EEA68FCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77C40DE1-EF21-4791-9B61-7FF6EEA68FCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45FFFC1E-2A2F-4427-8DCA-B522367471EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45FFFC1E-2A2F-4427-8DCA-B522367471EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45FFFC1E-2A2F-4427-8DCA-B522367471EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45FFFC1E-2A2F-4427-8DCA-B522367471EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6158F81D-AE6F-4BBD-A9A2-5BA9F8991C2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6158F81D-AE6F-4BBD-A9A2-5BA9F8991C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6158F81D-AE6F-4BBD-A9A2-5BA9F8991C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6158F81D-AE6F-4BBD-A9A2-5BA9F8991C2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61A9EA81-9457-4DC4-9DBF-34F4309F8E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61A9EA81-9457-4DC4-9DBF-34F4309F8E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61A9EA81-9457-4DC4-9DBF-34F4309F8E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61A9EA81-9457-4DC4-9DBF-34F4309F8E17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE6E310A-9CE2-4F3A-86FC-C18EECCB5BAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE6E310A-9CE2-4F3A-86FC-C18EECCB5BAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE6E310A-9CE2-4F3A-86FC-C18EECCB5BAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE6E310A-9CE2-4F3A-86FC-C18EECCB5BAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E497638-13D8-4863-BEF5-E853E424FE6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E497638-13D8-4863-BEF5-E853E424FE6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E497638-13D8-4863-BEF5-E853E424FE6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E497638-13D8-4863-BEF5-E853E424FE6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
