@@ -8,7 +8,7 @@ namespace DotNext
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
     public class InternalWcfServer : IContract
     {
-      public ReplyData GetFileData(InputData data)
+      public ReplyData GetReply(InputData data)
       {
         return ServerLogic.Convert(data);
       }
@@ -26,7 +26,9 @@ namespace DotNext
       host.AddServiceEndpoint(typeof(IContract),
         new BinaryHttpBinding(200 * 1024 * 1024),
         new Uri("http://localhost:20000/dotnext2017spb"));
-      host.Open();
+      host.AddServiceEndpoint(typeof(IContract),
+        new BinaryTcpBinding(), 
+        new Uri("net.tcp://localhost:20001/dotnext2017spb")); host.Open();
     }
   }
 }

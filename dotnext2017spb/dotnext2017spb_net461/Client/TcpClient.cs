@@ -9,10 +9,10 @@ namespace DotNext
 
     public TcpClient()
     {
-      client.Connect(new IPEndPoint(IPAddress.Loopback, 17000));
+      client.Connect(new IPEndPoint(IPAddress.Parse(Program.ServerIP), 17000));
     }
 
-    public ReplyData GetFileData(InputData data)
+    public ReplyData GetReply(InputData data)
     {
       var networkStream = client.GetStream();
       networkStream.Send(data);
@@ -25,4 +25,6 @@ namespace DotNext
       client.Close();
     }
   }
+
+
 }

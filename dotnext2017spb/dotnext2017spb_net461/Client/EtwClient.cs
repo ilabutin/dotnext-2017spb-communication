@@ -28,7 +28,7 @@ namespace DotNext
       etwSession.Dispose();
     }
 
-    public ReplyData GetFileData(InputData data)
+    public ReplyData GetReply(InputData data)
     {
       var inputBuf = ByteArray.CreateFrom(data);
       EtwSource.Instance.SendInputData(inputBuf);

@@ -20,11 +20,11 @@ namespace DotNext
       return null;
     }
 
-    ReplyData IContract.GetFileData(InputData data)
+    ReplyData IContract.GetReply(InputData data)
     {
       if (this.service != null)
       {
-        return this.service.GetFileData(data);
+        return this.service.GetReply(data);
       }
       return null;
     }

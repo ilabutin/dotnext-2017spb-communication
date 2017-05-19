@@ -9,10 +9,10 @@ namespace DotNext
 
     public TcpClient()
     {
-      client.ConnectAsync(IPAddress.Loopback, 17000).Wait();
+      client.ConnectAsync(IPAddress.Parse(Program.ServerIP), 17000).Wait();
     }
 
-    public ReplyData GetFileData(InputData data)
+    public ReplyData GetReply(InputData data)
     {
       var networkStream = client.GetStream();
       networkStream.Send(data);

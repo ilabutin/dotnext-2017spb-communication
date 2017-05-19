@@ -5,25 +5,31 @@ namespace DotNext
 {
   public class ZeroMqClient : IContract, IDisposable
   {
-    public ReplyData GetFileData(InputData data)
-    {
-      using (ZContext context = new ZContext())
-      using (ZSocket request = new ZSocket(context, ZSocketType.REQ))
-      {
-        request.Connect("tcp://127.0.0.1:18000");
+    private readonly ZContext context;
+    private readonly ZSocket request;
 
-        var inputBuf = ByteArray.CreateFrom(data);
-        request.Send(new ZFrame(inputBuf));
-        using (ZFrame reply = request.ReceiveFrame())
-        {
-          var replyData = reply.Read();
-          return replyData.ConvertTo<ReplyData>();
-        }
+    public ZeroMqClient()
+    {
+      context = new ZContext();
+      request = new ZSocket(context, ZSocketType.REQ);
+
+      request.Connect($"tcp://{Program.ServerIP}:18000");
+    }
+    public ReplyData GetReply(InputData data)
+    {
+      var inputBuf = ByteArray.CreateFrom(data);
+      request.Send(new ZFrame(inputBuf));
+      using (ZFrame reply = request.ReceiveFrame())
+      {
+        var replyData = reply.Read();
+        return replyData.ConvertTo<ReplyData>();
       }
     }
 
     public void Dispose()
     {
+      request.Dispose();
+      context.Dispose();
     }
   }
 }

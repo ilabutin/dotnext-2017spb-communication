@@ -8,7 +8,10 @@ namespace DotNext
     private static byte[] ReceiveByteArray(Stream stream)
     {
       byte[] bufLen = new byte[4];
-      stream.Read(bufLen, 0, 4);
+      if (stream.Read(bufLen, 0, 4) == 0)
+      {
+        return null;
+      }
       int expectedLen = BitConverter.ToInt32(bufLen, 0);
       byte[] buf = new byte[expectedLen];
       int receivedLen = 0;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 
 namespace DotNext
 {
@@ -14,7 +13,6 @@ namespace DotNext
     {
       var reply = new ReplyData
       {
-        Md5Hash = MD5.Create().ComputeHash(data.Content),
         Size = data.Content.LongLength
       };
       return reply;

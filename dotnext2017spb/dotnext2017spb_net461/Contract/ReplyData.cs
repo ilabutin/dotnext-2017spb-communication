@@ -9,7 +9,5 @@ namespace DotNext
   {
     [DataMember]
     public long Size;
-    [DataMember]
-    public byte[] Md5Hash;
   }
 }

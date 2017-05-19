@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -22,10 +23,30 @@ namespace DotNext
         while (true)
         {
           var tcpClient = listener.AcceptTcpClient();
+          Console.WriteLine("Connected");
           var networkStream = tcpClient.GetStream();
-          var inputData = networkStream.Receive<InputData>();
-          var reply = ServerLogic.Convert(inputData);
-          networkStream.Send(reply);
+          try
+          {
+            while (true)
+            {
+              var inputData = networkStream.Receive<InputData>();
+              if (inputData == null)
+              {
+                Console.WriteLine("Disconnected");
+                break;
+              }
+              var reply = ServerLogic.Convert(inputData);
+              networkStream.Send(reply);
+            }
+          }
+          catch (Exception e)
+          {
+            Console.WriteLine("Exception: {0}", e);
+          }
+          finally
+          {
+            tcpClient.Dispose();
+          }
         }
       });
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace DotNext
 {
@@ -12,31 +11,39 @@ namespace DotNext
     {
       if (reply.Size != expectedReply.Size)
       {
-        Console.WriteLine("Unexpected size received");
-      }
-      else if (!reply.Md5Hash.SequenceEqual(expectedReply.Md5Hash))
-      {
-        Console.WriteLine("Unexpected MD5 hash received");
-      }
-      else
-      {
-        Console.WriteLine("Correct reply received");
+        throw new InvalidOperationException();
       }
     }
 
+//    private static void Test<T>() where T : IContract, new()
+//    {
+//      var client = new T();
+//      for (int i = 0; i < 100; i++)
+//      {
+//        VerifyReply(client.GetReply(inputData));
+//      }
+//      (client as IDisposable)?.Dispose();
+//    }
+
     private static void Test<T>() where T : IContract, new()
     {
-      var client = new T();
-      VerifyReply(client.GetFileData(inputData));
-      (client as IDisposable)?.Dispose();
+      for (int j = 0; j < 100; j++)
+      {
+        var client = new T();
+        for (int i = 0; i < 10000; i++)
+        {
+          VerifyReply(client.GetReply(inputData));
+        }
+        (client as IDisposable)?.Dispose();
+        Console.WriteLine("Client {0} done", j);
+      }
     }
 
     private static void Main(string[] args)
     {
       inputData = new InputData
       {
-        Name = "fileName",
-        Content = new byte[10 * 1024]
+        Content = new byte[100 * 1024]
       };
       new Random().NextBytes(inputData.Content);
       expectedReply = ServerLogic.Convert(inputData);
@@ -62,6 +69,9 @@ namespace DotNext
           break;
         case "wcf":
           Test<WcfClient>();
+          break;
+        case "wcftcp":
+          Test<WcfTcpClient>();
           break;
         case "udp":
           Test<UdpClient>();
@@ -89,6 +99,9 @@ namespace DotNext
           break;
         case "zeromq":
           Test<ZeroMqClient>();
+          break;
+        case "rabbitmq":
+          Test<RabbitMqClient>();
           break;
       }
       Console.WriteLine("Client test completed.");

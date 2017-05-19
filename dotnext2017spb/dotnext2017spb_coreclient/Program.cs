@@ -5,6 +5,13 @@ namespace DotNext
 {
   internal class Program
   {
+//    public static string ServerIP = "127.0.0.1";
+//    public static string ClientIP = "127.0.0.1";
+    //    public static string ServerIP = "192.168.54.253";
+    //    public static string ClientIP = "192.168.55.37";
+        public static string ServerIP = "192.168.54.253";
+        public static string ClientIP = "192.168.55.26";
+
     private static InputData inputData;
     private static ReplyData expectedReply;
 
@@ -12,22 +19,17 @@ namespace DotNext
     {
       if (reply.Size != expectedReply.Size)
       {
-        Console.WriteLine("Unexpected size received");
-      }
-      else if (!reply.Md5Hash.SequenceEqual(expectedReply.Md5Hash))
-      {
-        Console.WriteLine("Unexpected MD5 hash received");
-      }
-      else
-      {
-        Console.WriteLine("Correct reply received");
+        throw new InvalidOperationException();
       }
     }
 
     private static void Test<T>() where T : IContract, new()
     {
       var client = new T();
-      VerifyReply(client.GetFileData(inputData));
+      for (int i = 0; i < 100000; i++)
+      {
+        VerifyReply(client.GetReply(inputData));
+      }
       (client as IDisposable)?.Dispose();
     }
 
@@ -35,8 +37,7 @@ namespace DotNext
     {
       inputData = new InputData
       {
-        Name = "fileName",
-        Content = new byte[10 * 1024]
+        Content = new byte[1]
       };
       new Random().NextBytes(inputData.Content);
       expectedReply = ServerLogic.Convert(inputData);
@@ -56,6 +57,9 @@ namespace DotNext
         case "wcf":
           Test<WcfClient>();
           break;
+        case "wcftcp":
+          Test<WcfTcpClient>();
+          break;
         case "udp":
           Test<UdpClient>();
           break;
@@ -70,6 +74,9 @@ namespace DotNext
           break;
         case "zeromq":
           Test<ZeroMqClient>();
+          break;
+        case "rabbitmq":
+          Test<RabbitMqClient>();
           break;
       }
       Console.WriteLine("Client test completed.");

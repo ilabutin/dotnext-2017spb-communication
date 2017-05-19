@@ -6,6 +6,6 @@ namespace DotNext
   public interface IContract
   {
     [OperationContract]
-    ReplyData GetFileData(InputData data);
+    ReplyData GetReply(InputData data);
   }
 }

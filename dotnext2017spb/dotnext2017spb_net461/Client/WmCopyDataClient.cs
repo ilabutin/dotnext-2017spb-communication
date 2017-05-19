@@ -52,7 +52,7 @@ namespace DotNext
     private readonly AutoResetEvent replyReadyEvent = new AutoResetEvent(false);
     private NativeWindow messageHandler;
 
-    public ReplyData GetFileData(InputData data)
+    public ReplyData GetReply(InputData data)
     {
       Task.Factory.StartNew(() =>
       {

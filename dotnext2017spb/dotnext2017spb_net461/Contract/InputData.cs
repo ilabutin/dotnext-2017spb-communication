@@ -9,7 +9,5 @@ namespace DotNext
   {
     [DataMember]
     public byte[] Content;
-    [DataMember]
-    public string Name;
   }
 }

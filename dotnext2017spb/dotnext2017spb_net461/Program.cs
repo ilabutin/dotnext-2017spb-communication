@@ -5,6 +5,12 @@ namespace DotNext
 {
   internal class Program
   {
+    public static string ServerIP = "127.0.0.1";
+    public static string ClientIP = "127.0.0.1";
+    //    public static string ServerIP = "192.168.54.253";
+    //    public static string ClientIP = "192.168.55.37";
+//        public static string ServerIP = "192.168.54.253";
+//        public static string ClientIP = "192.168.55.26";
     private static void Main(string[] args)
     {
       string ipcMethod;
@@ -96,6 +102,14 @@ namespace DotNext
           {
             server.Start();
             Console.WriteLine("ZeroMQ Server started");
+            Console.ReadLine();
+          }
+          break;
+        case "rabbitmq":
+          using (var server = new RabbitMqServer())
+          {
+            server.Start();
+            Console.WriteLine("RabbitMQ Server started");
             Console.ReadLine();
           }
           break;

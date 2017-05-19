@@ -8,10 +8,15 @@ namespace DotNext
   {
     public static T ConvertTo<T>(this byte[] source)
     {
+      if (source == null)
+      {
+        return default(T);
+      }
+
       var converter = new DataContractSerializer(typeof(T));
 
       using (var inputStream = new MemoryStream(source))
-      using (var xmlReader = XmlDictionaryReader.CreateBinaryReader(inputStream, new XmlDictionaryReaderQuotas()))
+      using (var xmlReader = XmlDictionaryReader.CreateBinaryReader(inputStream, new XmlDictionaryReaderQuotas() { MaxArrayLength = 1024 * 1024 * 1024 }))
       {
         return (T)converter.ReadObject(xmlReader);
       }

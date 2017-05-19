@@ -10,15 +10,17 @@ namespace DotNext.Benchmarks
   public class RemotingTest : BaseTest<RemotingClient> { }
   public class UdpTest : BaseTest<UdpClient> { }
   public class WcfTest : BaseTest<WcfClient> { }
+  public class WcfTcpTest : BaseTest<WcfTcpClient> { }
   public class WmCopyDataTest : BaseTest<WmCopyDataClient> { }
   public class ZeroMqTest : BaseTest<ZeroMqClient> { }
+  public class RabbitMqTest : BaseTest<RabbitMqClient> { }
   public class MemoryMappedFileTest : BaseTest<MmfClient> { }
   public class NoIpcTest : BaseTest<NoIpcClient> { }
   public class NoIpcWithSerializationTest : BaseTest<NoIpcWithSerializationClient> { }
 
   public class NoIpcClient : IContract
   {
-    public ReplyData GetFileData(InputData data)
+    public ReplyData GetReply(InputData data)
     {
       return ServerLogic.Convert(data);
     }
@@ -26,7 +28,7 @@ namespace DotNext.Benchmarks
 
   public class NoIpcWithSerializationClient : IContract
   {
-    public ReplyData GetFileData(InputData data)
+    public ReplyData GetReply(InputData data)
     {
       var inputBuf = ByteArray.CreateFrom(data);
       var input = inputBuf.ConvertTo<InputData>();
@@ -38,18 +40,15 @@ namespace DotNext.Benchmarks
 
   class Program
   {
+    public static string serverIP = "127.0.0.1";
     static void Main(string[] args)
     {
-      string ipcMethod;
       if (args.Length > 0)
       {
-        ipcMethod = args[0];
+        serverIP = args[0];
       }
-      else
-      {
-        Console.Write("Please specify IPC client method to benchmark: ");
-        ipcMethod = Console.ReadLine();
-      }
+      Console.Write("Please specify IPC client method to benchmark: ");
+      string ipcMethod = Console.ReadLine();
       switch (ipcMethod)
       {
         case "noipc":
@@ -60,6 +59,9 @@ namespace DotNext.Benchmarks
           break;
         case "wcf":
           BenchmarkRunner.Run<WcfTest>();
+          break;
+        case "wcftcp":
+          BenchmarkRunner.Run<WcfTcpTest>();
           break;
         case "udp":
           BenchmarkRunner.Run<UdpTest>();
@@ -87,6 +89,19 @@ namespace DotNext.Benchmarks
           break;
         case "zeromq":
           BenchmarkRunner.Run<ZeroMqTest>();
+          break;
+        case "rabbitmq":
+          BenchmarkRunner.Run<RabbitMqTest>();
+          break;
+        case "all":
+          BenchmarkRunner.Run<WcfTest>();
+          BenchmarkRunner.Run<WcfTcpTest>();
+          BenchmarkRunner.Run<UdpTest>();
+          BenchmarkRunner.Run<TcpTest>();
+          BenchmarkRunner.Run<RemotingTest>();
+          BenchmarkRunner.Run<NamedPipeTest>();
+          BenchmarkRunner.Run<ZeroMqTest>();
+          BenchmarkRunner.Run<RabbitMqTest>();
           break;
       }
     }

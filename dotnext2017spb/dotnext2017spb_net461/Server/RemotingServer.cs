@@ -3,6 +3,7 @@ using System.Collections;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
+using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Serialization.Formatters;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,16 +12,9 @@ namespace DotNext
 {
   public sealed class RemotingServer : IServer
   {
-    private class InternalRemotingServer : IContract
+    private class InternalRemotingServer : MarshalByRefObject, IContract
     {
-      private readonly RemotingServer server;
-
-      public InternalRemotingServer(RemotingServer server)
-      {
-        this.server = server;
-      }
-
-      public ReplyData GetFileData(InputData data)
+      public ReplyData GetReply(InputData data)
       {
         return ServerLogic.Convert(data);
       }
@@ -35,8 +29,9 @@ namespace DotNext
     {
       Task.Factory.StartNew(() =>
       {
-        var properties = new Hashtable { ["portName"] = typeof(IContract).Name };
-        var channel = new IpcChannel(properties, null, serverSinkProvider);
+        //var properties = new Hashtable { ["portName"] = typeof(IContract).Name };
+        RemotingConfiguration.CustomErrorsMode = CustomErrorsModes.Off;
+        var channel = new TcpChannel(21000);
 
         try
         {
@@ -47,13 +42,15 @@ namespace DotNext
           //might be already registered, ignore it
         }
 
-        var remoteObject = new RemoteObject(new InternalRemotingServer(this));
+        RemotingConfiguration.RegisterWellKnownServiceType(typeof(InternalRemotingServer), "remoteObject", WellKnownObjectMode.Singleton);
 
-        RemotingServices.Marshal(remoteObject, typeof(RemoteObject).Name + ".rem");
+        //var remoteObject = new RemoteObject(new InternalRemotingServer(this));
+
+        //RemotingServices.Marshal(remoteObject, typeof(RemoteObject).Name + ".rem");
 
         killer.WaitOne();
 
-        RemotingServices.Disconnect(remoteObject);
+        //RemotingServices.Disconnect(remoteObject);
 
         try
         {

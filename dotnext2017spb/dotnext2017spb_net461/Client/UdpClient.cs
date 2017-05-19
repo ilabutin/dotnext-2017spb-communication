@@ -8,15 +8,19 @@ namespace DotNext
     private readonly System.Net.Sockets.UdpClient server = new System.Net.Sockets.UdpClient();
     private readonly System.Net.Sockets.UdpClient replySocket = new System.Net.Sockets.UdpClient(16001);
 
+    public UdpClient()
+    {
+      server.Connect(Program.ServerIP, 16000);
+    }
+
     public void Dispose()
     {
       replySocket.Close();
       server.Close();
     }
 
-    public ReplyData GetFileData(InputData data)
+    public ReplyData GetReply(InputData data)
     {
-      server.Connect("", 16000);
       byte[] inputBuffer = ByteArray.CreateFrom(data);
       server.Send(inputBuffer, inputBuffer.Length);
 

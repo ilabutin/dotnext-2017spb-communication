@@ -6,8 +6,8 @@ namespace DotNext
 {
   public sealed class MessageQueueServer : IServer
   {
-    private System.Messaging.MessageQueue requestQueue;
-    private System.Messaging.MessageQueue replyQueue;
+    private MessageQueue requestQueue;
+    private MessageQueue replyQueue;
 
     void IDisposable.Dispose()
     {
@@ -17,15 +17,15 @@ namespace DotNext
       replyQueue.Dispose();
     }
 
-    public static System.Messaging.MessageQueue CreateQueue(string name)
+    public static MessageQueue CreateQueue(string name)
     {
-      if (System.Messaging.MessageQueue.Exists(name))
+      if (MessageQueue.Exists(name))
       {
-        return new System.Messaging.MessageQueue(name);
+        return new MessageQueue(name);
       }
       else
       {
-        return System.Messaging.MessageQueue.Create(name);
+        return MessageQueue.Create(name);
       }
     }
 
@@ -34,7 +34,7 @@ namespace DotNext
       Task.Factory.StartNew(() =>
       {
         var requestQueueName = string.Format(".\\Private$\\{0}_requests", typeof(IContract).Name);
-        var replyQueueName = string.Format(".\\Private$\\{0}_replies", typeof(IContract).Name);
+        var replyQueueName = string.Format("FormatName:Direct=TCP:{0}\\Private$\\{1}_replies", Program.ClientIP, typeof(IContract).Name);
 
         requestQueue = CreateQueue(requestQueueName);
         replyQueue = CreateQueue(replyQueueName);

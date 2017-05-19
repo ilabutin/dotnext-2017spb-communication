@@ -1,9 +1,10 @@
-﻿using System.IO.MemoryMappedFiles;
+﻿using System;
+using System.IO.MemoryMappedFiles;
 using System.Threading;
 
 namespace DotNext
 {
-  public class MmfClient : IContract
+  public class MmfClient : IContract, IDisposable
   {
     public static readonly string RequestReadyEventName = typeof(IContract).Name + "_request";
     public static readonly string ReplyReadyEventName = typeof(IContract).Name + "_reply";
@@ -18,28 +19,37 @@ namespace DotNext
       return e;
     }
 
-    public ReplyData GetFileData(InputData data)
+    private readonly EventWaitHandle requestReadyEvent;
+    private readonly EventWaitHandle replyReadyEvent;
+    private readonly MemoryMappedFile file;
+    private readonly MemoryMappedViewStream stream;
+
+    public MmfClient()
     {
-      EventWaitHandle requestReadyEvent = OpenEvent(RequestReadyEventName);
-      EventWaitHandle replyReadyEvent = OpenEvent(ReplyReadyEventName);
+      requestReadyEvent = OpenEvent(RequestReadyEventName);
+      replyReadyEvent = OpenEvent(ReplyReadyEventName);
+      file = MemoryMappedFile.CreateOrOpen(SharedFileName, Constants.MaxMessageSize);
+      stream = file.CreateViewStream();
+    }
 
-      using (requestReadyEvent)
-      using (replyReadyEvent)
-      using (var file = MemoryMappedFile.CreateOrOpen(SharedFileName, Constants.MaxMessageSize))
-      {
-        using (MemoryMappedViewStream stream = file.CreateViewStream())
-        {
-          stream.Send(data);
-          requestReadyEvent.Set();
-        }
+    public ReplyData GetReply(InputData data)
+    {
+      stream.Position = 0;
+      stream.Send(data);
+      requestReadyEvent.Set();
 
-        replyReadyEvent.WaitOne();
-        using (MemoryMappedViewStream stream = file.CreateViewStream())
-        {
-          var replyData = stream.Receive<ReplyData>();
-          return replyData;
-        }
-      }
+      replyReadyEvent.WaitOne();
+      stream.Position = 0;
+      var replyData = stream.Receive<ReplyData>();
+      return replyData;
+    }
+
+    public void Dispose()
+    {
+      requestReadyEvent?.Dispose();
+      replyReadyEvent?.Dispose();
+      stream.Dispose();
+      file?.Dispose();
     }
   }
 }

@@ -1,5 +1,4 @@
 ﻿using System.ServiceModel;
-using DotNext;
 
 namespace DotNext
 {
@@ -7,6 +6,6 @@ namespace DotNext
   public interface IContract
   {
     [OperationContract]
-    ReplyData GetFileData(InputData data);
+    ReplyData GetReply(InputData data);
   }
 }

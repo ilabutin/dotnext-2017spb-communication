@@ -6,19 +6,23 @@ namespace DotNext
 {
   public class ZeroMqClient : IContract, IDisposable
   {
-    public ReplyData GetFileData(InputData data)
+    private readonly RequestSocket request;
+
+    public ZeroMqClient()
     {
-      using (var request = new RequestSocket(">tcp://127.0.0.1:18000"))
-      {
-        var inputBuf = ByteArray.CreateFrom(data);
-        request.SendFrame(inputBuf);
-        var replyData = request.ReceiveFrameBytes();
-        return replyData.ConvertTo<ReplyData>();
-      }
+      request = new RequestSocket($">tcp://{Program.ServerIP}:18000");
+    }
+    public ReplyData GetReply(InputData data)
+    {
+      var inputBuf = ByteArray.CreateFrom(data);
+      request.SendFrame(inputBuf);
+      var replyData = request.ReceiveFrameBytes();
+      return replyData.ConvertTo<ReplyData>();
     }
 
     public void Dispose()
     {
+      request.Dispose();
     }
   }
 }

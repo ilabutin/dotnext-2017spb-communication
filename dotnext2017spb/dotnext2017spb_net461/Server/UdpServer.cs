@@ -19,13 +19,13 @@ namespace DotNext
       Task.Factory.StartNew(() =>
       {
         var peerAddress = new IPEndPoint(IPAddress.Any, 0);
+        replySocket.Connect(Program.ClientIP, 16001);
         while (true)
         {
           var message = server.Receive(ref peerAddress);
           var inputData = message.ConvertTo<InputData>();
           var reply = ServerLogic.Convert(inputData);
           var replyBuffer = ByteArray.CreateFrom(reply);
-          replySocket.Connect("", 16001);
           replySocket.Send(replyBuffer, replyBuffer.Length);
         }
       });
