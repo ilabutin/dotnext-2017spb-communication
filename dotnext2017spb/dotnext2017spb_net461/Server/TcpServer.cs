@@ -24,6 +24,7 @@ namespace DotNext
         {
           var tcpClient = listener.AcceptTcpClient();
           Console.WriteLine("Connected");
+          tcpClient.NoDelay = true;
           var networkStream = tcpClient.GetStream();
           try
           {

@@ -7,10 +7,10 @@ namespace DotNext
   {
 //    public static string ServerIP = "127.0.0.1";
 //    public static string ClientIP = "127.0.0.1";
-    //    public static string ServerIP = "192.168.54.253";
-    //    public static string ClientIP = "192.168.55.37";
         public static string ServerIP = "192.168.54.253";
-        public static string ClientIP = "192.168.55.26";
+        public static string ClientIP = "192.168.55.37";
+        //public static string ServerIP = "192.168.54.253";
+//        public static string ClientIP = "192.168.55.26";
 
     private static InputData inputData;
     private static ReplyData expectedReply;

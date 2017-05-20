@@ -10,6 +10,7 @@ namespace DotNext
     public TcpClient()
     {
       client.Connect(new IPEndPoint(IPAddress.Parse(Program.ServerIP), 17000));
+      client.NoDelay = true;
     }
 
     public ReplyData GetReply(InputData data)

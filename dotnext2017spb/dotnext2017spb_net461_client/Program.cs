@@ -27,10 +27,10 @@ namespace DotNext
 
     private static void Test<T>() where T : IContract, new()
     {
-      for (int j = 0; j < 100; j++)
+      for (int j = 0; j < 1; j++)
       {
         var client = new T();
-        for (int i = 0; i < 10000; i++)
+        for (int i = 0; i < 100; i++)
         {
           VerifyReply(client.GetReply(inputData));
         }
@@ -102,6 +102,9 @@ namespace DotNext
           break;
         case "rabbitmq":
           Test<RabbitMqClient>();
+          break;
+        case "webapi":
+          Test<WebApiClient>();
           break;
       }
       Console.WriteLine("Client test completed.");

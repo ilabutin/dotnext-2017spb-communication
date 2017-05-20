@@ -8,6 +8,7 @@ namespace DotNext.Benchmarks
   public class UdpTest : BaseTest<UdpClient> { }
   public class WcfTest : BaseTest<WcfClient> { }
   public class WcfTcpTest : BaseTest<WcfTcpClient> { }
+  public class WebApiTest : BaseTest<WebApiClient> { }
   public class ZeroMqTest : BaseTest<ZeroMqClient> { }
   public class RabbitMqTest : BaseTest<RabbitMqClient> { }
   public class MemoryMappedFileTest : BaseTest<MmfClient> { }
@@ -79,6 +80,9 @@ namespace DotNext.Benchmarks
           break;
         case "rabbitmq":
           BenchmarkRunner.Run<RabbitMqTest>();
+          break;
+        case "webapi":
+          BenchmarkRunner.Run<WebApiTest>();
           break;
         case "all":
           BenchmarkRunner.Run<WcfTcpTest>();

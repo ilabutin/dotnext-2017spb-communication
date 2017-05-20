@@ -15,6 +15,7 @@ namespace DotNext.Benchmarks
   public class ZeroMqTest : BaseTest<ZeroMqClient> { }
   public class RabbitMqTest : BaseTest<RabbitMqClient> { }
   public class MemoryMappedFileTest : BaseTest<MmfClient> { }
+  public class WebApiTest : BaseTest<WebApiClient> { }
   public class NoIpcTest : BaseTest<NoIpcClient> { }
   public class NoIpcWithSerializationTest : BaseTest<NoIpcWithSerializationClient> { }
 
@@ -92,6 +93,9 @@ namespace DotNext.Benchmarks
           break;
         case "rabbitmq":
           BenchmarkRunner.Run<RabbitMqTest>();
+          break;
+        case "webapi":
+          BenchmarkRunner.Run<WebApiTest>();
           break;
         case "all":
           BenchmarkRunner.Run<WcfTest>();

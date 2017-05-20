@@ -95,6 +95,7 @@
     <Compile Include="Client\TcpClient.cs" />
     <Compile Include="Client\UdpClient.cs" />
     <Compile Include="Client\WcfClient.cs" />
+    <Compile Include="Client\WebApiClient.cs" />
     <Compile Include="Client\WmCopyDataClient.cs" />
     <Compile Include="Client\ZeroMqClient.cs" />
     <Compile Include="Contract\InputData.cs" />
